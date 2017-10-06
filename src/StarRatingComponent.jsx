@@ -9,7 +9,7 @@ class StarRatingComponent extends Component {
     editing: PropTypes.bool,
     starCount: PropTypes.number,
     starColor: PropTypes.string,
-    onStarClick: PropTypes.func,
+    onChange: PropTypes.func,
     renderStarIcon: PropTypes.func,
     renderStarIconHalf: PropTypes.func
   };
@@ -38,24 +38,8 @@ class StarRatingComponent extends Component {
     }
   }
 
-  onChange(value) {
-    const { editing } = this.props;
-
-    if (!editing) {
-      return;
-    }
-
-    this.setState({ value });
-  }
-
-  onStarClick(index, value, name) {
-    const { onStarClick, editing } = this.props;
-
-    if (!editing) {
-      return;
-    }
-
-    onStarClick && onStarClick(index, value, name);
+  onStartClick(value) {
+    this.props.onChange(value);
   }
 
   renderStars() {
@@ -87,7 +71,6 @@ class StarRatingComponent extends Component {
           id={id}
           value={i}
           checked={value === i}
-          onChange={this.onChange.bind(this, i, name)}
         />
       );
       const starNodeLabel = (
@@ -96,7 +79,7 @@ class StarRatingComponent extends Component {
           style={starStyles(i, value)}
           className={'dv-star-rating-star ' + (value >= i ? 'dv-star-rating-full-star' : 'dv-star-rating-empty-star')}
           htmlFor={id}
-          onClick={this.onStarClick.bind(this, i, value, name)}
+          onClick={this.onStartClick.bind(this, i)}
         >
           {this.renderIcon(i, value, name)}
         </label>
